@@ -1,5 +1,16 @@
-// Header Component
-export function Header({ currentPaper, onOpenPaperSelector, stats, onToggleCalculator, onOpenSettings }) {
+// Header Component with Aspirant Profile & Error Notebook triggers
+export function Header({
+  currentPaper,
+  onOpenPaperSelector,
+  stats,
+  historyCount,
+  onToggleCalculator,
+  onOpenSettings,
+  user,
+  onOpenProfile,
+  onOpenHistory,
+  onOpenSignIn
+}) {
   return (
     <header className="sticky top-0 z-40 bg-slate-900 border-b border-slate-800 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -19,42 +30,53 @@ export function Header({ currentPaper, onOpenPaperSelector, stats, onToggleCalcu
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              IISc & IIT standard PYQ-modeled practice with instant evaluation
+              {user ? `Aspirant: ${user.name} • ${user.targetYear}` : 'IIT & IISc standard PYQ practice with instant evaluation'}
             </p>
           </div>
         </div>
 
-        {/* Paper Selector & Live Stats */}
-        <div className="flex items-center space-x-2 sm:space-x-4">
+        {/* Right Action Bar */}
+        <div className="flex items-center space-x-2 sm:space-x-3">
           
           {/* Active GATE Paper Pill */}
           <button
             onClick={onOpenPaperSelector}
-            className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-medium border border-slate-700 hover:border-blue-500/50 transition-all cursor-pointer group"
+            className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium border border-slate-700 hover:border-blue-500/50 transition-all cursor-pointer group"
             title="Change GATE Paper"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span className="text-slate-300 font-bold">{currentPaper.code}</span>
             <span className="text-slate-400 hidden md:inline">({currentPaper.shortName})</span>
-            <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-400 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
+            <span className="text-slate-400 text-xs">▼</span>
+          </button>
+
+          {/* Error Notebook / History Button */}
+          <button
+            onClick={onOpenHistory}
+            className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 hover:border-indigo-500/40 transition text-xs flex items-center space-x-1.5 cursor-pointer relative"
+            title="View Attempt History & Error Notebook"
+          >
+            <span className="text-sm">📖</span>
+            <span className="hidden sm:inline font-medium">History</span>
+            {historyCount > 0 && (
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-600 text-white font-bold font-mono">
+                {historyCount}
+              </span>
+            )}
           </button>
 
           {/* Virtual Calculator Button */}
           <button
             onClick={onToggleCalculator}
-            className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-900/60 text-slate-300 hover:text-indigo-300 border border-slate-700 hover:border-indigo-500/50 transition text-xs flex items-center space-x-1.5"
+            className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-900/60 text-slate-300 hover:text-indigo-300 border border-slate-700 hover:border-indigo-500/50 transition text-xs flex items-center space-x-1.5 cursor-pointer"
             title="Open GATE Virtual Calculator"
           >
-            <svg className="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-            </svg>
             <span className="hidden sm:inline font-mono font-bold">Calculator</span>
+            <span className="sm:hidden font-mono text-xs">🧮</span>
           </button>
 
           {/* Score & Accuracy Badges */}
-          <div className="hidden lg:flex items-center space-x-2 bg-slate-950/70 px-3 py-1 rounded-lg border border-slate-800 font-mono text-xs">
+          <div className="hidden xl:flex items-center space-x-2 bg-slate-950/70 px-3 py-1 rounded-lg border border-slate-800 font-mono text-xs">
             <span className="text-slate-400">Score:</span>
             <span className={`font-bold ${stats.score >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
               {stats.score.toFixed(2)}
@@ -66,16 +88,36 @@ export function Header({ currentPaper, onOpenPaperSelector, stats, onToggleCalcu
             </span>
           </div>
 
-          {/* AI Settings Button */}
+          {/* User Profile Pill or Sign In Button */}
+          {user ? (
+            <button
+              onClick={onOpenProfile}
+              className="flex items-center space-x-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-gradient-to-r from-blue-950 to-indigo-950 border border-blue-500/40 hover:border-blue-400 transition cursor-pointer"
+              title="Aspirant Profile"
+            >
+              <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+              <span className="text-xs font-bold text-blue-200 hidden md:inline max-w-[90px] truncate">
+                {user.name}
+              </span>
+            </button>
+          ) : (
+            <button
+              onClick={onOpenSignIn}
+              className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition cursor-pointer flex items-center space-x-1.5"
+            >
+              <span>Sign In</span>
+            </button>
+          )}
+
+          {/* Settings Button */}
           <button
             onClick={onOpenSettings}
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-blue-400 border border-slate-700 transition"
+            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-blue-400 border border-slate-700 transition cursor-pointer text-xs"
             title="Configure AI & Gemini API"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
+            ⚙
           </button>
 
         </div>

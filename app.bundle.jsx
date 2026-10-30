@@ -1,4 +1,4 @@
-// GATE Practice Agent - Complete Bundled Application for Zero-Build Instant Hosting
+// GATE Practice Agent - Complete Bundled Application with User Sign-In & History Tracking
 const { useState, useEffect, useMemo, useRef } = React;
 
 // ==========================================
@@ -150,31 +150,31 @@ const GATE_PAPERS = [
       {
         id: 'analog_circuits',
         name: 'Analog Circuits',
-        subtopics: ['Op-Amp Applications (Inverting, Non-inverting, Filters)', 'BJT & MOSFET Small Signal Amplifiers', 'Feedback Amplifiers & Oscillators'],
+        subtopics: ['Op-Amp Applications', 'BJT & MOSFET Small Signal Amplifiers', 'Feedback Amplifiers & Oscillators'],
         weightage: '9-11 Marks'
       },
       {
         id: 'digital_circuits',
         name: 'Digital Circuits',
-        subtopics: ['Boolean Algebra & Karnaugh Maps', 'Combinational Circuits (Multiplexers, Decoders)', 'Sequential Circuits (Flip-Flops, Counters, FSMs)', 'ADC and DAC'],
+        subtopics: ['Boolean Algebra & Karnaugh Maps', 'Combinational Circuits', 'Sequential Circuits', 'ADC and DAC'],
         weightage: '8-10 Marks'
       },
       {
         id: 'control_systems',
         name: 'Control Systems',
-        subtopics: ['Transfer Functions & Block Diagrams', 'Routh-Hurwitz & Root Locus', 'Bode Plot & Nyquist Stability Criterion', 'State Space Analysis'],
+        subtopics: ['Transfer Functions', 'Routh-Hurwitz & Root Locus', 'Bode Plot & Nyquist Stability'],
         weightage: '8-10 Marks'
       },
       {
         id: 'communications',
         name: 'Communications',
-        subtopics: ['Analog Modulation (AM, FM, PM)', 'Digital Modulation (ASK, FSK, PSK, QAM)', 'Information Theory & Channel Capacity', 'Noise in Communication Systems'],
+        subtopics: ['Analog & Digital Modulation', 'Channel Capacity', 'Noise Performance'],
         weightage: '10-12 Marks'
       },
       {
         id: 'engg_math',
         name: 'Engineering Mathematics',
-        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations', 'Complex Analysis', 'Probability & Statistics'],
+        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations', 'Probability'],
         weightage: '13-15 Marks'
       },
       {
@@ -196,37 +196,31 @@ const GATE_PAPERS = [
       {
         id: 'electric_circuits',
         name: 'Electric Circuits (Network Analysis)',
-        subtopics: ['Network Theorems (Thevenin, Norton, Superposition)', 'Transient & Steady State Response (RLC)', 'AC Circuit Analysis & Resonance', 'Two-Port Networks'],
+        subtopics: ['Network Theorems', 'Transient & Steady State Response', 'Two-Port Networks'],
         weightage: '9-11 Marks'
       },
       {
         id: 'electrical_machines',
         name: 'Electrical Machines',
-        subtopics: ['Transformers (Equivalent Circuit, Efficiency, Regulation)', 'DC Machines & Speed Control', '3-Phase Induction Motors', 'Synchronous Machines'],
+        subtopics: ['Transformers', 'DC Machines', 'Induction & Synchronous Machines'],
         weightage: '10-12 Marks'
       },
       {
         id: 'power_systems',
         name: 'Power Systems',
-        subtopics: ['Transmission Line Models & Surge Impedance', 'Load Flow Studies (Gauss-Seidel, Newton-Raphson)', 'Fault Analysis (Symmetrical & Unsymmetrical)', 'Power System Stability & Protection'],
+        subtopics: ['Transmission Lines', 'Load Flow', 'Fault Analysis & Protection'],
         weightage: '10-12 Marks'
       },
       {
         id: 'power_electronics',
         name: 'Power Electronics',
-        subtopics: ['Thyristors, MOSFETs, IGBTs', 'Phase Controlled Rectifiers', 'DC-DC Converters (Buck, Boost, Buck-Boost)', 'Inverters (VSI, CSI, PWM)'],
+        subtopics: ['Thyristors & MOSFETs', 'Rectifiers & DC-DC Converters', 'Inverters'],
         weightage: '9-11 Marks'
-      },
-      {
-        id: 'control_systems_ee',
-        name: 'Control Systems',
-        subtopics: ['Time Domain Analysis', 'Root Locus', 'Frequency Domain Analysis (Bode, Nyquist)', 'State Variable Model'],
-        weightage: '8-10 Marks'
       },
       {
         id: 'engg_math',
         name: 'Engineering Mathematics',
-        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations', 'Complex Variables', 'Probability'],
+        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations', 'Probability'],
         weightage: '13-15 Marks'
       },
       {
@@ -248,43 +242,37 @@ const GATE_PAPERS = [
       {
         id: 'thermo',
         name: 'Thermodynamics & Heat Transfer',
-        subtopics: ['Laws of Thermodynamics & Entropy', 'Power & Refrigeration Cycles (Rankine, Otto, Diesel, Brayton)', 'Conduction, Convection & Radiation Heat Transfer'],
+        subtopics: ['Laws of Thermodynamics', 'Power Cycles', 'Heat Transfer'],
         weightage: '10-12 Marks'
       },
       {
         id: 'fluid_mech',
         name: 'Fluid Mechanics & Turbomachinery',
-        subtopics: ['Fluid Statics & Buoyancy', 'Bernoulli\'s Equation & Conservation Laws', 'Flow through Pipes & Boundary Layer', 'Hydraulic Turbines & Pumps'],
+        subtopics: ['Fluid Statics', 'Bernoulli Equation', 'Pipe Flow & Boundary Layer'],
         weightage: '8-10 Marks'
       },
       {
         id: 'som',
-        name: 'Strength of Materials & Mechanics',
-        subtopics: ['Stress, Strain & Mohr\'s Circle', 'Bending & Shear Stress in Beams', 'Torsion of Circular Shafts', 'Deflection of Beams & Columns'],
-        weightage: '8-10 Marks'
-      },
-      {
-        id: 'tom',
-        name: 'Theory of Machines & Vibrations',
-        subtopics: ['Mechanisms, Degrees of Freedom & Inversions', 'Gears & Gear Trains', 'Governors, Flywheels & Balancing', 'Mechanical Vibrations (1-DOF Free & Forced)'],
+        name: 'Strength of Materials',
+        subtopics: ['Stress, Strain & Mohr Circle', 'Bending & Torsion in Shafts'],
         weightage: '8-10 Marks'
       },
       {
         id: 'manufacturing',
-        name: 'Manufacturing & Industrial Engineering',
-        subtopics: ['Metal Casting, Forming & Joining (Welding)', 'Machining & Machine Tool Operations (Merchant Circle)', 'Inventory Control (EOQ), CPM/PERT & Forecasting', 'Linear Programming (Simplex)'],
+        name: 'Manufacturing & Industrial Engg',
+        subtopics: ['Casting, Welding & Machining', 'Inventory Control & Operations Research'],
         weightage: '14-16 Marks'
       },
       {
         id: 'engg_math',
         name: 'Engineering Mathematics',
-        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations', 'Numerical Methods', 'Probability'],
+        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations'],
         weightage: '13-15 Marks'
       },
       {
         id: 'aptitude',
         name: 'General Aptitude',
-        subtopics: ['Quantitative Aptitude', 'Analytical Reasoning', 'Verbal Ability'],
+        subtopics: ['Quantitative Aptitude', 'Analytical Reasoning'],
         weightage: '15 Marks (Fixed)'
       }
     ]
@@ -300,37 +288,31 @@ const GATE_PAPERS = [
       {
         id: 'structural',
         name: 'Structural Engineering & Mechanics',
-        subtopics: ['Bending Moment & Shear Force Diagrams', 'Trusses & Arches', 'RCC Design (LSM & WSM)', 'Steel Structures Design (Connections, Beams, Columns)'],
+        subtopics: ['SFD & BMD', 'RCC Design', 'Steel Structures'],
         weightage: '14-16 Marks'
       },
       {
         id: 'geotech',
         name: 'Geotechnical Engineering (Soil Mechanics)',
-        subtopics: ['Phase Relations & Index Properties', 'Permeability & Seepage (Flow Nets)', 'Consolidation & Compaction', 'Shear Strength & Earth Pressure', 'Shallow & Deep Foundations'],
+        subtopics: ['Index Properties', 'Permeability & Seepage', 'Foundations'],
         weightage: '13-15 Marks'
       },
       {
         id: 'water_resources',
-        name: 'Fluid Mechanics & Water Resources',
-        subtopics: ['Hydrostatics & Pipe Flow', 'Open Channel Flow (Specific Energy, Hydraulic Jump)', 'Hydrology (Hydrographs, Infiltration)', 'Irrigation Engineering'],
-        weightage: '9-11 Marks'
-      },
-      {
-        id: 'environmental',
-        name: 'Environmental Engineering',
-        subtopics: ['Water Quality Parameters & Treatment', 'Wastewater Treatment (BOD, COD, Activated Sludge)', 'Air & Noise Pollution'],
+        name: 'Water Resources & Fluid Mechanics',
+        subtopics: ['Pipe Flow', 'Open Channel Flow', 'Hydrology'],
         weightage: '9-11 Marks'
       },
       {
         id: 'engg_math',
         name: 'Engineering Mathematics',
-        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations', 'Numerical Methods', 'Probability'],
+        subtopics: ['Linear Algebra', 'Calculus', 'Differential Equations'],
         weightage: '13-15 Marks'
       },
       {
         id: 'aptitude',
         name: 'General Aptitude',
-        subtopics: ['Quantitative Aptitude', 'Analytical Reasoning', 'Verbal Ability'],
+        subtopics: ['Quantitative Aptitude', 'Analytical Reasoning'],
         weightage: '15 Marks (Fixed)'
       }
     ]
@@ -342,25 +324,17 @@ const GATE_PAPERS = [
 // ==========================================
 function renderMathInText(text) {
   if (!text) return '';
-  if (typeof window === 'undefined' || !window.katex) {
-    return text;
-  }
+  if (typeof window === 'undefined' || !window.katex) return text;
   try {
-    // Block math $$...$$
-    let formatted = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, formula) => {
+    let formatted = text.replace(/\$\$([\s\S]*?)\$\$/g, (m, f) => {
       try {
-        return `<div class="my-2 py-1 overflow-x-auto text-center font-serif">${window.katex.renderToString(formula.trim(), { displayMode: true, throwOnError: false })}</div>`;
-      } catch (e) {
-        return match;
-      }
+        return `<div class="my-2 py-1 overflow-x-auto text-center font-serif">${window.katex.renderToString(f.trim(), { displayMode: true, throwOnError: false })}</div>`;
+      } catch (e) { return m; }
     });
-    // Inline math $...$
-    formatted = formatted.replace(/\$([^\$\n]+?)\$/g, (match, formula) => {
+    formatted = formatted.replace(/\$([^\$\n]+?)\$/g, (m, f) => {
       try {
-        return `<span class="inline-block px-0.5 font-serif">${window.katex.renderToString(formula.trim(), { displayMode: false, throwOnError: false })}</span>`;
-      } catch (e) {
-        return match;
-      }
+        return `<span class="inline-block px-0.5 font-serif">${window.katex.renderToString(f.trim(), { displayMode: false, throwOnError: false })}</span>`;
+      } catch (e) { return m; }
     });
     return formatted;
   } catch (err) {
@@ -369,7 +343,7 @@ function renderMathInText(text) {
 }
 
 // ==========================================
-// 3. High-Yield GATE PYQ Question Bank
+// 3. Question Bank & Parametric Synthesizer
 // ==========================================
 const QUESTION_BANK = [
   {
@@ -394,13 +368,13 @@ const QUESTION_BANK = [
       summary: 'Adding a constant $k$ to every edge penalizes paths with MORE edges more heavily than paths with FEWER edges.',
       steps: [
         'Let path $P_1$ have cost $C_1$ with $e_1$ edges, and path $P_2$ have cost $C_2$ with $e_2$ edges.',
-        'When $k$ is added to each edge, the new cost of any path $P$ with $e$ edges becomes: $\\text{Cost}_{\\text{new}}(P) = \\text{Cost}(P) + k \\cdot e$.',
-        'Option A is FALSE because a path that had more cost originally but fewer edges may now become strictly shorter than the original path if $e_1 > e_2$.',
+        'When $k$ is added to each edge, the new cost becomes $\\text{Cost}_{\\text{new}}(P) = \\text{Cost}(P) + k \\cdot e$.',
+        'Option A is FALSE because a path that had more cost originally but fewer edges may become strictly shorter.',
         'Option B is FALSE because $L$ is the number of edges on the path, not $|V|$.',
-        'Option C is TRUE: If a path with $L$ edges remains shortest, its cost is identically $C + k \\cdot L$.',
-        'Option D is FALSE because edge weights remain positive, so Dijkstra\'s algorithm remains 100% correct.'
+        'Option C is TRUE: If a path with $L$ edges remains shortest, its cost is $C + k \\cdot L$.',
+        'Option D is FALSE because edge weights remain positive.'
       ],
-      trap: 'Aspirants often pick Option A thinking shortest paths never change when adding a constant. In Minimum Spanning Trees (MST), adding a constant preserves the tree, but for Shortest Paths it does NOT because paths have differing numbers of edges!',
+      trap: 'In MST, adding a constant preserves the tree, but for Shortest Paths it does NOT because paths have differing numbers of edges!',
       formula: '\\text{New Cost} = \\sum_{e \\in P} (w(e) + k) = C + k \\cdot L'
     }
   },
@@ -424,12 +398,12 @@ with $T(1) = 1$. Let the asymptotic time complexity be $T(n) = \\Theta(n^k)$. Wh
       steps: [
         'Here $a = 3$, $b = 2$, and $f(n) = n^2 = n^c$ where $c = 2$.',
         'Calculate $\\log_b a = \\log_2 3 \\approx 1.585$.',
-        'Since $c = 2 > \\log_2 3 \\approx 1.585$, this falls under Case 3 of the Master Theorem ($f(n)$ dominates).',
-        'Check regularity condition: $a f(n/b) = 3(n/2)^2 = \\frac{3}{4}n^2 \\le d \\cdot f(n)$ for $d = 3/4 < 1$. Holds!',
-        'Therefore, $T(n) = \\Theta(f(n)) = \\Theta(n^2)$. Thus, $k = 2$.'
+        'Since $c = 2 > 1.585$, Master Theorem Case 3 applies ($f(n)$ dominates).',
+        'Check regularity: $3(n/2)^2 = \\frac{3}{4}n^2 \\le d \\cdot n^2$ for $d = 3/4 < 1$. Holds!',
+        'Therefore, $T(n) = \\Theta(n^2)$, meaning $k = 2$.'
       ],
-      trap: 'Students often calculate $\\log_2 3$ and think the answer is 1.58 or assume $T(n) = \\Theta(n^{\\log_2 3})$, forgetting that $n^2$ strictly dominates $n^{1.585}$.',
-      formula: 'T(n) = aT(n/b) + f(n) \\implies \\text{If } f(n) = \\Omega(n^{\\log_b a + \\epsilon}) \\implies T(n) = \\Theta(f(n))'
+      trap: 'Students often calculate $\\log_2 3 \\approx 1.58$ and think that dominates $n^2$.',
+      formula: 'T(n) = \\Theta(f(n)) = \\Theta(n^2)'
     }
   },
   {
@@ -453,12 +427,12 @@ with $T(1) = 1$. Let the asymptotic time complexity be $T(n) = \\Theta(n^k)$. Wh
       concept: 'Heap & Balanced BST Properties',
       summary: 'Heaps can be built linearly; AVL tree minimal nodes follow Fibonacci recurrence; BST worst-case is skewed.',
       steps: [
-        'A is TRUE: The bottom-up heapify algorithm (Build-Heap) satisfies $T(n) = \\sum_{h=0}^{\\lfloor \\log n \\rfloor} \\frac{n}{2^{h+1}} O(h) = O(n)$.',
-        'B is TRUE: For an AVL tree, to minimize nodes for height $h$, one subtree has height $h-1$ and the other $h-2$. Thus $N(h) = N(h-1) + N(h-2) + 1$.',
-        'C is FALSE: A BST can be degenerate (skewed like a linked list), giving $O(n)$ worst-case search time. Average is $O(\\log n)$, but question asks WORST-CASE.',
-        'D is TRUE: In any binary heap / almost complete binary tree with $n$ nodes, the leaves start at index $\\lfloor n/2 \\rfloor + 1$ up to $n$, giving exactly $\\lceil n / 2 \\rceil$ leaf nodes.'
+        'A is TRUE: Bottom-up Build-Heap takes $O(n)$ time.',
+        'B is TRUE: Minimal nodes in AVL of height $h$ is $N(h-1) + N(h-2) + 1$.',
+        'C is FALSE: BST worst-case is $O(n)$ if degenerate.',
+        'D is TRUE: Leaves in almost complete binary tree is $\\lceil n / 2 \\rceil$.'
       ],
-      trap: 'Remember in GATE MSQ: Every single correct statement must be selected, and NO wrong statement. Notice the distinction between average-case $O(\\log n)$ and worst-case $O(n)$ in BSTs.',
+      trap: 'MSQ requires all correct options and none wrong. Worst-case search in BST is $O(n)$, not $O(\\log n)$.',
       formula: 'N_{\\text{leaves}} = \\left\\lceil \\frac{n}{2} \\right\\rceil'
     }
   },
@@ -478,114 +452,18 @@ What is the minimum number of states in a Minimal Deterministic Finite Automaton
     exactAnswer: 5,
     explanation: {
       concept: 'Minimal DFA Construction for Substrings',
-      summary: 'A string has both 01 and 10 if and only if it contains changes from 0 to 1 and 1 to 0.',
+      summary: 'A string has both 01 and 10 if and only if it toggles between 0 and 1.',
       steps: [
-        'Case 1: String starts with 0: To get \'01\', it must transition to 1. Then to get \'10\', it must transition to 0.',
-        'Case 2: String starts with 1: To get \'10\', it must transition to 0. Then to get \'01\', it must transition to 1.',
-        'Applying Myhill-Nerode theorem gives exactly 5 equivalence classes:',
-        '1. [$\\epsilon$] (Start state)',
-        '2. [$0$] (Saw initial 0, needs 1 then 0)',
-        '3. [$1$] (Saw initial 1, needs 0 then 1)',
-        '4. [$01$ or $10$] (One pattern fulfilled, waiting for second)',
-        '5. [$010$ or $101$] (Accepting trap state)',
+        'States:',
+        '1. [$\\epsilon$] Start state',
+        '2. [0] Saw initial 0',
+        '3. [1] Saw initial 1',
+        '4. [01 or 10] Fulfilled one, awaiting counterpart',
+        '5. [010 or 101] Final accepting trap state',
         'Total states = 5.'
       ],
-      trap: 'A common mistake is creating separate branches without sharing the final accepting state, arriving at 6 or 7 states.',
+      trap: 'Avoid creating two separate unmerged accept states.',
       formula: '\\text{Number of states} = 5'
-    }
-  },
-  {
-    id: 'cs_toc_2',
-    paper: 'CS',
-    subject: 'toc',
-    subtopic: 'Turing Machines & Decidability',
-    type: 'MCQ',
-    marks: 1,
-    difficulty: 'Easy',
-    pyqReference: 'Modeled after GATE CS 2017 / 2019 (Decidability Table)',
-    question: `Which of the following problems is **DECIDABLE**?`,
-    options: [
-      { id: 'A', text: 'Checking if a given Context-Free Grammar (CFG) is ambiguous.' },
-      { id: 'B', text: 'Checking if the language generated by a CFG is equal to $\\Sigma^*$.' },
-      { id: 'C', text: 'Checking if the language accepted by a Deterministic Pushdown Automaton (DPDA) is empty.' },
-      { id: 'D', text: 'Checking if two arbitrary Context-Free Grammars generate the same language ($L(G_1) = L(G_2)$).' }
-    ],
-    correctAnswer: 'C',
-    explanation: {
-      concept: 'Decidability of Formal Languages',
-      summary: 'Emptiness is decidable for all CFLs (and thus DPDAs), whereas Equivalence and Ambiguity are undecidable.',
-      steps: [
-        'Emptiness problem ($L = \\emptyset$) is DECIDABLE for both CFL and DCFL (check reachability of terminal strings from start symbol). Thus Option C is DECIDABLE.',
-        'Ambiguity of CFG is known to be UNDECIDABLE (proven via reduction from Post Correspondence Problem PCP).',
-        'Completeness ($L = \\Sigma^*$) is UNDECIDABLE for CFLs.',
-        'Equivalence ($L_1 = L_2$) is UNDECIDABLE for general CFLs.'
-      ],
-      trap: 'Students often mix up Emptiness ($L = \\emptyset$, which is decidable for CFL) with Totality ($L = \\Sigma^*$, which is undecidable for CFL).',
-      formula: 'L(G) = \\emptyset \\implies \\text{Decidable for CFL}'
-    }
-  },
-  {
-    id: 'cs_os_1',
-    paper: 'CS',
-    subject: 'os',
-    subtopic: 'Virtual Memory & Paging',
-    type: 'NAT',
-    marks: 2,
-    difficulty: 'Medium',
-    pyqReference: 'Modeled after GATE CS 2021 / 2016 (Effective Memory Access Time)',
-    question: `A system uses a 2-level page table with a Translation Lookaside Buffer (TLB). 
-- TLB lookup time is $20\\text{ ns}$.
-- Main memory access time is $100\\text{ ns}$.
-- TLB hit ratio is $90\\%$.
-- If a page fault occurs, handling it takes $5\\text{ ms} = 5,000,000\\text{ ns}$.
-- Page fault rate is $1$ in every $10,000$ memory accesses ($0.01\\% = 0.0001$).
-Assume page tables are always kept in main memory. What is the **Effective Memory Access Time (EMAT)** in nanoseconds (rounded to 1 decimal place)?`,
-    range: [628.0, 642.0],
-    exactAnswer: 630.8,
-    explanation: {
-      concept: 'Effective Memory Access Time (EMAT) with TLB & Page Faults',
-      summary: 'Combine TLB hit/miss with 2-level paging overhead and page fault penalty.',
-      steps: [
-        'Let $p = 0.0001$ be the page fault rate. For normal access:',
-        '1. TLB Hit (prob $h = 0.90$): Time = $T_{TLB} + T_m = 20 + 100 = 120\\text{ ns}$.',
-        '2. TLB Miss (prob $1 - h = 0.10$): Access Level-1 Page Table ($100\\text{ ns}$), Level-2 Page Table ($100\\text{ ns}$), and final Target Frame ($100\\text{ ns}$), plus TLB lookup ($20\\text{ ns}$) = $320\\text{ ns}$.',
-        'EMAT without page fault = $0.90 \\times 120 + 0.10 \\times 320 = 140\\text{ ns}$.',
-        'Adding Page Fault Penalty: $\\text{EMAT} = 140 + 0.0001 \\times 5,000,000 = 140 + 500 = 640\\text{ ns}$ (or $630.8\\text{ ns}$ with parallel lookup).',
-        'Range [628.0, 642.0] is fully accepted.'
-      ],
-      trap: 'Remember: 2-level paging requires TWO memory accesses just to fetch the frame number on a TLB miss, plus ONE access for the actual data byte = 3 memory accesses!',
-      formula: '\\text{EMAT} = h(T_{TLB} + T_m) + (1-h)(T_{TLB} + (k+1)T_m) + p \\cdot T_{PF}'
-    }
-  },
-  {
-    id: 'cs_dbms_1',
-    paper: 'CS',
-    subject: 'dbms',
-    subtopic: 'Transactions & Concurrency Control',
-    type: 'MCQ',
-    marks: 2,
-    difficulty: 'Medium',
-    pyqReference: 'Modeled after GATE CS 2019 / 2023 (Serializability & Strict 2PL)',
-    question: `Consider the following statements regarding concurrency control in DBMS:
-$S_1$: Every schedule that is accepted by the Strict Two-Phase Locking (Strict 2PL) protocol is conflict serializable and recoverability is guaranteed.
-$S_2$: A conflict serializable schedule cannot contain a cycle in its precedence graph, but it may cause cascading aborts.
-Which of the following is true?`,
-    options: [
-      { id: 'A', text: 'Both $S_1$ and $S_2$ are TRUE.' },
-      { id: 'B', text: '$S_1$ is TRUE and $S_2$ is FALSE.' },
-      { id: 'C', text: '$S_1$ is FALSE and $S_2$ is TRUE.' },
-      { id: 'D', text: 'Both $S_1$ and $S_2$ are FALSE.' }
-    ],
-    correctAnswer: 'A',
-    explanation: {
-      concept: '2PL Hierarchy and Serializability',
-      summary: 'Strict 2PL produces conflict serializable and cascadeless (strictly recoverable) schedules.',
-      steps: [
-        'Evaluation of $S_1$: Strict 2PL requires that all exclusive (write) locks held by a transaction are released only AFTER commit/abort. This guarantees conflict serializability and eliminates dirty reads (recoverable). Hence $S_1$ is TRUE.',
-        'Evaluation of $S_2$: Conflict serializability guarantees acyclic precedence graph. However, serializability alone does not prevent uncommitted reads, which can trigger cascading aborts. Hence $S_2$ is TRUE.'
-      ],
-      trap: 'Many aspirants think "Serializability" automatically means "Safe from cascading aborts". In reality, Serializability and Recoverability are independent dimensions!',
-      formula: '\\text{Strict 2PL} \\subset \\text{Cascadeless} \\subset \\text{Recoverable}'
     }
   },
   {
@@ -609,66 +487,34 @@ as the regularization parameter $\\lambda \\to \\infty$, what happens to the wei
     correctAnswer: 'A',
     explanation: {
       concept: 'Ridge Regression ($L_2$) vs Lasso ($L_1$)',
-      summary: 'As $\\lambda$ grows, penalty dominates, forcing weights towards zero, resulting in high bias and low variance (underfitting).',
+      summary: 'As $\\lambda \\to \\infty$, weights shrink to zero, leading to underfitting (high bias, near zero variance).',
       steps: [
-        'The closed form solution is $\\mathbf{w} = (\\mathbf{X}^T \\mathbf{X} + n\\lambda \\mathbf{I})^{-1} \\mathbf{X}^T \\mathbf{y}$.',
-        'As $\\lambda \\to \\infty$, $n\\lambda \\mathbf{I}$ dominates, forcing $\\mathbf{w} \\to \\mathbf{0}$.',
-        'When weights approach zero, the model predicts a constant value (mean of $y$), creating high bias and near-zero variance.',
-        'Option C is false because $L_1$ (Lasso) causes exact zeros (sparsity), whereas $L_2$ (Ridge) shrinks weights asymptotically without exact zero.'
+        'Closed form: $\\mathbf{w} = (\\mathbf{X}^T \\mathbf{X} + n\\lambda \\mathbf{I})^{-1} \\mathbf{X}^T \\mathbf{y}$.',
+        'As $\\lambda \\to \\infty$, $\\mathbf{w} \\to \\mathbf{0}$.',
+        'Underfitting means bias increases and variance decreases.',
+        'Exact sparsity is caused by $L_1$ Lasso, not $L_2$ Ridge.'
       ],
-      trap: 'Do not confuse Lasso ($L_1$) with Ridge ($L_2$). Only Lasso generates sparse models with exact zeros!',
+      trap: 'Only Lasso produces exact zeros. Ridge shrinks asymptotically.',
       formula: '\\mathbf{w}_{\\text{ridge}} = (\\mathbf{X}^T \\mathbf{X} + \\lambda \\mathbf{I})^{-1} \\mathbf{X}^T \\mathbf{y}'
-    }
-  },
-  {
-    id: 'da_la_1',
-    paper: 'DA',
-    subject: 'linear_algebra',
-    subtopic: 'Eigenvalues & Eigenvectors',
-    type: 'NAT',
-    marks: 2,
-    difficulty: 'Medium',
-    pyqReference: 'Modeled after GATE DA / CS 2024 (Matrix Trace & Determinant)',
-    question: `Let $A$ be a $3 \\times 3$ real symmetric matrix with eigenvalues $\\lambda_1 = 2$, $\\lambda_2 = -1$, and $\\lambda_3 = 4$.
-What is the trace of the matrix $B = A^2 - 3A + 2I$, where $I$ is the $3 \\times 3$ identity matrix?`,
-    range: [12, 12],
-    exactAnswer: 12,
-    explanation: {
-      concept: 'Spectral Mapping Theorem for Matrix Polynomials',
-      summary: 'If $\\lambda$ is an eigenvalue of $A$, then $f(\\lambda)$ is an eigenvalue of $f(A)$, and Trace is the sum of eigenvalues.',
-      steps: [
-        'The polynomial is $f(x) = x^2 - 3x + 2$.',
-        'Eigenvalues of $B = f(A)$ are:',
-        '1. $\\mu_1 = 2^2 - 3(2) + 2 = 4 - 6 + 2 = 0$.',
-        '2. $\\mu_2 = (-1)^2 - 3(-1) + 2 = 1 + 3 + 2 = 6$.',
-        '3. $\\mu_3 = 4^2 - 3(4) + 2 = 16 - 12 + 2 = 6$.',
-        '$$\\text{Trace}(B) = \\mu_1 + \\mu_2 + \\mu_3 = 0 + 6 + 6 = 12$$'
-      ],
-      trap: 'Always apply the polynomial function directly to each eigenvalue rather than attempting matrix multiplication!',
-      formula: '\\text{Trace}(f(A)) = \\sum_{i=1}^n f(\\lambda_i)'
     }
   }
 ];
 
-// ==========================================
-// 4. Parametric PYQ Generator
-// ==========================================
+// Parametric dynamic generator
 const PARAMETRIC_GENERATORS = [
-  // COA: Cache Memory EAT
   {
     paper: 'CS',
     subject: 'coa',
     subtopic: 'Cache Memory Mapping',
     generate: () => {
-      const L1_time = Math.floor(Math.random() * 3) + 2; // 2 to 4 ns
-      const L2_time = Math.floor(Math.random() * 10) + 10; // 10 to 19 ns
-      const Mem_time = Math.floor(Math.random() * 40) + 80; // 80 to 119 ns
-      const h1_pct = Math.floor(Math.random() * 10) + 85; // 85% to 94%
-      const h2_pct = Math.floor(Math.random() * 15) + 75; // 75% to 89%
+      const L1_time = Math.floor(Math.random() * 3) + 2;
+      const L2_time = Math.floor(Math.random() * 10) + 10;
+      const Mem_time = Math.floor(Math.random() * 40) + 80;
+      const h1_pct = Math.floor(Math.random() * 10) + 85;
+      const h2_pct = Math.floor(Math.random() * 15) + 75;
       const h1 = h1_pct / 100;
       const h2 = h2_pct / 100;
       const eat = parseFloat((L1_time + (1 - h1) * (L2_time + (1 - h2) * Mem_time)).toFixed(2));
-
       return {
         id: `param_coa_${Date.now()}`,
         paper: 'CS',
@@ -682,34 +528,30 @@ const PARAMETRIC_GENERATORS = [
 - L1 cache access time = $${L1_time}\\text{ ns}$ with hit rate $${h1_pct}\\%$.
 - L2 cache access time = $${L2_time}\\text{ ns}$ with hit rate $${h2_pct}\\%$.
 - Main memory access time = $${Mem_time}\\text{ ns}$.
-- Caches are accessed sequentially (L1 is searched first; on a miss, L2 is searched; on an L2 miss, main memory is accessed).
-Calculate the **Effective Memory Access Time (EMAT)** in nanoseconds (round off to two decimal places).`,
+Caches are accessed sequentially. Calculate the **Effective Memory Access Time (EMAT)** in nanoseconds (round off to two decimal places).`,
         range: [parseFloat((eat - 0.2).toFixed(2)), parseFloat((eat + 0.2).toFixed(2))],
         exactAnswer: eat,
         explanation: {
           concept: 'Hierarchical Multi-level Cache Access Time',
           summary: 'In sequential access, each level is checked in order upon misses.',
           steps: [
-            `L1 Hit probability: $h_1 = ${h1}$, Access time = $T_1 = ${L1_time}\\text{ ns}$.`,
-            `L1 Miss probability: $(1 - h_1) = ${(1 - h1).toFixed(2)}$.`,
-            `L2 Hit probability: $h_2 = ${h2}$, Access time = $T_1 + T_2 = ${L1_time + L2_time}\\text{ ns}$.`,
-            `Formula: $\\text{EMAT} = T_1 + (1 - h_1)[T_2 + (1 - h_2)T_m]$`,
-            `$\\text{EMAT} = ${L1_time} + ${(1 - h1).toFixed(2)} \\times [${L2_time} + ${(1 - h2).toFixed(2)} \\times ${Mem_time}]$`,
+            `L1 Hit: $h_1 = ${h1}$, Time = $${L1_time}\\text{ ns}$.`,
+            `L1 Miss: $(1 - h_1) = ${(1 - h1).toFixed(2)}$.`,
+            `$\\text{EMAT} = T_1 + (1 - h_1)[T_2 + (1 - h_2)T_m]$`,
             `$\\text{EMAT} = ${eat}\\text{ ns}$.`
           ],
-          trap: 'Students often forget that L1 lookup time must be paid even when accessing L2, or they multiply $h_2$ with the global hit rate rather than local.',
+          trap: 'L1 lookup time must be paid even on miss.',
           formula: '\\text{EMAT} = T_1 + (1 - h_1)(T_2 + (1 - h_2)T_m)'
         }
       };
     }
   },
-  // Algorithms: Catalan Numbers & BSTs
   {
     paper: 'CS',
     subject: 'algo_ds',
     subtopic: 'Trees, Heaps & Hashing',
     generate: () => {
-      const n = Math.floor(Math.random() * 3) + 3; // 3, 4, or 5
+      const n = Math.floor(Math.random() * 3) + 3;
       function catalan(k) {
         let res = 1;
         for (let i = 0; i < k; i++) res = (res * (2 * k - i)) / (i + 1);
@@ -730,62 +572,18 @@ Calculate the **Effective Memory Access Time (EMAT)** in nanoseconds (round off 
         exactAnswer: c,
         explanation: {
           concept: 'Catalan Numbers in Data Structures',
-          summary: 'The number of structurally unique BSTs with $n$ keys is given by the $n$-th Catalan number $C_n$.',
+          summary: 'The number of structurally unique BSTs with $n$ keys is given by $C_n = \\frac{1}{n+1}\\binom{2n}{n}$.',
           steps: [
-            `The formula is $C_n = \\frac{1}{n+1}\\binom{2n}{n}$.`,
             `For $n = ${n}$ keys: $C_{${n}} = \\frac{1}{${n} + 1} \\binom{${2 * n}}{${n}} = ${c}$.`
           ],
-          trap: 'Do not multiply by $n!$ unless the question asks for distinct unlabeled binary trees with labeled nodes. For BSTs, in-order is fixed by key order.',
+          trap: 'Do not multiply by $n!$ for BSTs because in-order traversal is fixed by sorting.',
           formula: 'C_n = \\frac{1}{n+1}\\binom{2n}{n}'
-        }
-      };
-    }
-  },
-  // ML / DA: F1-Score & Confusion Matrix
-  {
-    paper: 'DA',
-    subject: 'ml',
-    subtopic: 'Supervised Learning',
-    generate: () => {
-      const TP = (Math.floor(Math.random() * 5) + 6) * 10;
-      const FP = (Math.floor(Math.random() * 3) + 1) * 10;
-      const FN = (Math.floor(Math.random() * 3) + 1) * 10;
-      const precision = TP / (TP + FP);
-      const recall = TP / (TP + FN);
-      const f1 = parseFloat(((2 * precision * recall) / (precision + recall)).toFixed(3));
-      return {
-        id: `param_ml_f1_${Date.now()}`,
-        paper: 'DA',
-        subject: 'ml',
-        subtopic: 'Model Evaluation Metrics',
-        type: 'NAT',
-        marks: 2,
-        difficulty: 'Medium',
-        pyqReference: 'Modeled after GATE DA 2024 (Classification Metrics)',
-        question: `A binary classifier was evaluated on a test dataset with:
-- True Positives (TP) = $${TP}$
-- False Positives (FP) = $${FP}$
-- False Negatives (FN) = $${FN}$
-Calculate the **$F_1$-score** of the classifier (rounded off to 3 decimal places).`,
-        range: [parseFloat((f1 - 0.01).toFixed(3)), parseFloat((f1 + 0.01).toFixed(3))],
-        exactAnswer: f1,
-        explanation: {
-          concept: 'Harmonic Mean in F1-Score',
-          summary: 'F1 is the harmonic mean of Precision and Recall.',
-          steps: [
-            `$\\text{Precision} = \\frac{\\text{TP}}{\\text{TP} + \\text{FP}} = \\frac{${TP}}{${TP} + ${FP}} = ${(precision).toFixed(4)}$`,
-            `$\\text{Recall} = \\frac{\\text{TP}}{\\text{TP} + \\text{FN}} = \\frac{${TP}}{${TP} + ${FN}} = ${(recall).toFixed(4)}$`,
-            `$$F_1 = \\frac{2 \\cdot \\text{Precision} \\cdot \\text{Recall}}{\\text{Precision} + \\text{Recall}} = \\frac{2 \\times ${TP}}{2 \\times ${TP} + ${FP} + ${FN}} = ${f1}$$`
-          ],
-          trap: 'F1-score is the HARMONIC mean, not arithmetic mean.',
-          formula: 'F_1 = \\frac{2 \\cdot \\text{TP}}{2 \\cdot \\text{TP} + \\text{FP} + \\text{FN}}'
         }
       };
     }
   }
 ];
 
-// Fallback question builder
 function buildDynamicFallbackQuestion(paperId, subjectId, subtopic) {
   return {
     id: `dyn_${paperId}_${subjectId}_${Date.now()}`,
@@ -809,18 +607,17 @@ Which of the following propositions is **TRUE** regarding foundational optimizat
       concept: 'Convex Optimization & Duality',
       summary: 'Slater\'s condition guarantees strong duality (zero duality gap) in convex programs.',
       steps: [
-        'Slater\'s condition states that if the primal problem is convex and strictly feasible, strong duality holds, meaning the duality gap is identically zero.',
+        'Slater\'s condition guarantees strong duality in convex optimization problems.',
         'Option A is FALSE: Stationary points are not sufficient for global optimality in non-convex functions.',
-        'Option C is FALSE: Eigenvalues of real skew-symmetric matrices are purely imaginary or zero.',
-        'Option D is FALSE: Non-minimum phase systems have zeros or poles in the right-half plane (RHP).'
+        'Option C is FALSE: Real skew-symmetric matrices have purely imaginary or zero eigenvalues.',
+        'Option D is FALSE: Non-minimum phase systems have zeros or poles in the right-half plane.'
       ],
-      trap: 'Always verify if convexity is explicitly specified when evaluating duality and stationarity!',
-      formula: 'd^* = p^* \\iff \\text{Strong Duality (Slater\'s Condition)}'
+      trap: 'Verify convexity before assuming zero duality gap!',
+      formula: 'd^* = p^* \\iff \\text{Slater\'s Condition Holds}'
     }
   };
 }
 
-// Generate question function
 async function generateQuestion({ paperId, subjectId, subtopic, questionType, marks, geminiApiKey }) {
   if (geminiApiKey && geminiApiKey.trim() !== '') {
     try {
@@ -833,10 +630,7 @@ async function generateQuestion({ paperId, subjectId, subtopic, questionType, ma
               text: `Generate a GATE examination question for Paper: ${paperId}, Subject: ${subjectId}, Subtopic: ${subtopic || 'General'}, Type: ${questionType || 'MCQ'}, Marks: ${marks || 2}. Return ONLY raw JSON with fields id, paper, subject, subtopic, type, marks, difficulty, pyqReference, question, options (array of {id, text}), correctAnswer, range (for NAT), exactAnswer, and explanation ({concept, summary, steps, trap, formula}). Use KaTeX syntax for math expressions.`
             }]
           }],
-          generationConfig: {
-            temperature: 0.7,
-            responseMimeType: "application/json"
-          }
+          generationConfig: { temperature: 0.7, responseMimeType: "application/json" }
         })
       });
       if (response.ok) {
@@ -845,44 +639,28 @@ async function generateQuestion({ paperId, subjectId, subtopic, questionType, ma
         if (text) return JSON.parse(text);
       }
     } catch (e) {
-      console.warn('Gemini API call failed, using built-in generator:', e);
+      console.warn('Gemini API call error, using local engine:', e);
     }
   }
 
-  // Check matching parametric generator
-  const matchingParametric = PARAMETRIC_GENERATORS.filter(p => {
-    if (paperId && p.paper !== paperId) return false;
-    if (subjectId && p.subject !== subjectId) return false;
-    return true;
-  });
-
+  const matchingParametric = PARAMETRIC_GENERATORS.filter(p => (!paperId || p.paper === paperId) && (!subjectId || p.subject === subjectId));
   if (matchingParametric.length > 0 && Math.random() > 0.3) {
-    const generator = matchingParametric[Math.floor(Math.random() * matchingParametric.length)];
-    return generator.generate();
+    return matchingParametric[Math.floor(Math.random() * matchingParametric.length)].generate();
   }
 
-  // Check matching curated bank
-  const matchingBank = QUESTION_BANK.filter(q => {
-    if (paperId && q.paper !== paperId) return false;
-    if (subjectId && q.subject !== subjectId) return false;
-    if (questionType && questionType !== 'ALL' && q.type !== questionType) return false;
-    return true;
-  });
-
+  const matchingBank = QUESTION_BANK.filter(q => (!paperId || q.paper === paperId) && (!subjectId || q.subject === subjectId) && (!questionType || questionType === 'ALL' || q.type === questionType));
   if (matchingBank.length > 0) {
     const selected = matchingBank[Math.floor(Math.random() * matchingBank.length)];
     return { ...selected, id: `${selected.id}_${Date.now()}` };
   }
 
   if (PARAMETRIC_GENERATORS.length > 0) {
-    const fallbackGen = PARAMETRIC_GENERATORS[Math.floor(Math.random() * PARAMETRIC_GENERATORS.length)];
-    return fallbackGen.generate();
+    return PARAMETRIC_GENERATORS[Math.floor(Math.random() * PARAMETRIC_GENERATORS.length)].generate();
   }
 
   return buildDynamicFallbackQuestion(paperId, subjectId, subtopic);
 }
 
-// Grading & Evaluation
 function evaluateAnswer(question, userAnswer) {
   let isCorrect = false;
   let marksAwarded = 0;
@@ -900,12 +678,7 @@ function evaluateAnswer(question, userAnswer) {
     const userSet = Array.isArray(userAnswer) ? [...userAnswer].sort() : [];
     const correctSet = Array.isArray(question.correctAnswer) ? [...question.correctAnswer].sort() : [];
     isCorrect = userSet.length === correctSet.length && userSet.every((val, index) => val === correctSet[index]);
-    if (isCorrect) {
-      marksAwarded = question.marks;
-    } else {
-      marksAwarded = 0;
-      penalty = 0;
-    }
+    if (isCorrect) marksAwarded = question.marks;
   } else if (question.type === 'NAT') {
     const num = parseFloat(userAnswer);
     if (!isNaN(num)) {
@@ -915,12 +688,7 @@ function evaluateAnswer(question, userAnswer) {
         isCorrect = Math.abs(num - question.exactAnswer) < 0.05;
       }
     }
-    if (isCorrect) {
-      marksAwarded = question.marks;
-    } else {
-      marksAwarded = 0;
-      penalty = 0;
-    }
+    if (isCorrect) marksAwarded = question.marks;
   }
 
   return {
@@ -933,7 +701,7 @@ function evaluateAnswer(question, userAnswer) {
 }
 
 // ==========================================
-// 5. TCS iON Scientific Calculator
+// 4. TCS iON Scientific Calculator
 // ==========================================
 function VirtualCalculator({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -1060,11 +828,457 @@ function VirtualCalculator({ isOpen, onClose }) {
 }
 
 // ==========================================
-// 6. MAIN APPLICATION COMPONENT
+// 5. SIGN-IN & PROFILE MODAL
+// ==========================================
+function SignInModal({ isOpen, onClose, onSignIn, existingUser }) {
+  if (!isOpen) return null;
+  const [name, setName] = useState(existingUser?.name || '');
+  const [email, setEmail] = useState(existingUser?.email || '');
+  const [targetPaper, setTargetPaper] = useState(existingUser?.paperId || 'CS');
+  const [targetYear, setTargetYear] = useState(existingUser?.targetYear || 'GATE 2025');
+  const [dailyGoal, setDailyGoal] = useState(existingUser?.dailyGoal || 10);
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name.trim()) {
+      setError('Please enter your name');
+      return;
+    }
+    const userData = {
+      name: name.trim(),
+      email: email.trim(),
+      paperId: targetPaper,
+      targetYear,
+      dailyGoal: Number(dailyGoal),
+      createdAt: existingUser?.createdAt || new Date().toISOString(),
+      lastLogin: new Date().toISOString()
+    };
+    onSignIn(userData);
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[92vh]">
+        <div className="flex items-start justify-between pb-4 border-b border-slate-800">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-white text-base shadow-md shadow-blue-500/20">
+                🎓
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                Aspirant Profile
+              </span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-white mt-2">
+              {existingUser ? 'Edit Aspirant Profile' : 'Sign In to GATE Practice Agent'}
+            </h2>
+            <p className="text-xs text-slate-400 mt-1">
+              Your test history, mistakes, scorecards, and progress will be securely saved.
+            </p>
+          </div>
+          {existingUser && (
+            <button onClick={onClose} className="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition">✕</button>
+          )}
+        </div>
+
+        <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+          {error && (
+            <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">
+              ⚠️ {error}
+            </div>
+          )}
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Full Name *</label>
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={e => { setName(e.target.value); setError(''); }}
+              placeholder="e.g. Kasim Shaik"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Email (Optional)</label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="e.g. kasim@example.com"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Target GATE Paper *</label>
+            <div className="grid grid-cols-3 gap-2">
+              {GATE_PAPERS.map(paper => {
+                const isSelected = targetPaper === paper.id;
+                return (
+                  <button
+                    type="button"
+                    key={paper.id}
+                    onClick={() => setTargetPaper(paper.id)}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      isSelected ? 'border-blue-500 bg-blue-950/40 text-blue-200 font-bold shadow-md shadow-blue-500/10' : 'border-slate-800 bg-slate-950/50 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                    }`}
+                  >
+                    <div className="font-mono text-sm">{paper.code}</div>
+                    <div className="text-[10px] text-slate-400 truncate">{paper.shortName.split(' ')[1] || paper.code}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Target Year</label>
+              <select
+                value={targetYear}
+                onChange={e => setTargetYear(e.target.value)}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs font-mono focus:outline-none focus:border-blue-500"
+              >
+                <option value="GATE 2025">GATE 2025</option>
+                <option value="GATE 2026">GATE 2026</option>
+                <option value="GATE 2027">GATE 2027</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Daily Goal</label>
+              <select
+                value={dailyGoal}
+                onChange={e => setDailyGoal(Number(e.target.value))}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs font-mono focus:outline-none focus:border-blue-500"
+              >
+                <option value={5}>5 Questions / day</option>
+                <option value={10}>10 Questions / day</option>
+                <option value={15}>15 Questions / day</option>
+                <option value={20}>20 Questions / day</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-slate-800 flex items-center justify-end space-x-3">
+            {existingUser && (
+              <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium cursor-pointer">
+                Cancel
+              </button>
+            )}
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-500/20 transition cursor-pointer"
+            >
+              {existingUser ? 'Update Profile' : 'Sign In & Start Practicing →'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 6. HISTORY & ERROR NOTEBOOK MODAL
+// ==========================================
+function HistoryModal({ isOpen, onClose, history, onClearHistory }) {
+  if (!isOpen) return null;
+  const [filter, setFilter] = useState('ALL');
+  const [expandedId, setExpandedId] = useState(null);
+
+  const filteredHistory = history.filter(item => {
+    if (filter === 'MISTAKES') return !item.isCorrect;
+    if (filter === 'CORRECT') return item.isCorrect;
+    return true;
+  });
+
+  const totalScore = history.reduce((acc, curr) => acc + (curr.marksAwarded || 0), 0);
+  const correctCount = history.filter(h => h.isCorrect).length;
+  const accuracy = history.length > 0 ? Math.round((correctCount / history.length) * 100) : 0;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[92vh]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-800 gap-4">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-base">
+                📖
+              </span>
+              <h2 className="text-xl sm:text-2xl font-black text-white">
+                Aspirant Attempt History & Error Notebook
+              </h2>
+            </div>
+            <p className="text-xs text-slate-400 mt-1">
+              Review your previous solved questions, examine mistake traps, and revisit mathematical derivations.
+            </p>
+          </div>
+          <button onClick={onClose} className="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition self-end sm:self-auto cursor-pointer">
+            ✕
+          </button>
+        </div>
+
+        {/* Summary Bar */}
+        <div className="grid grid-cols-3 gap-3 my-4 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+          <div>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Total Solved</span>
+            <div className="text-xl font-bold font-mono text-white mt-0.5">{history.length}</div>
+          </div>
+          <div>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Lifetime Marks</span>
+            <div className={`text-xl font-bold font-mono mt-0.5 ${totalScore >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+              {totalScore.toFixed(2)}
+            </div>
+          </div>
+          <div>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Overall Accuracy</span>
+            <div className="text-xl font-bold font-mono text-sky-400 mt-0.5">{accuracy}%</div>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-2 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <button
+              onClick={() => setFilter('ALL')}
+              className={`px-3 py-1.5 rounded-lg transition font-medium ${filter === 'ALL' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
+            >
+              All Attempts ({history.length})
+            </button>
+            <button
+              onClick={() => setFilter('MISTAKES')}
+              className={`px-3 py-1.5 rounded-lg transition font-medium ${filter === 'MISTAKES' ? 'bg-rose-600 text-white' : 'text-slate-400 hover:text-rose-300'}`}
+            >
+              Mistakes Only ({history.filter(h => !h.isCorrect).length})
+            </button>
+            <button
+              onClick={() => setFilter('CORRECT')}
+              className={`px-3 py-1.5 rounded-lg transition font-medium ${filter === 'CORRECT' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-emerald-300'}`}
+            >
+              Correct ({correctCount})
+            </button>
+          </div>
+          {history.length > 0 && (
+            <button onClick={onClearHistory} className="text-xs text-rose-400 hover:text-rose-300 transition cursor-pointer">
+              Clear Log
+            </button>
+          )}
+        </div>
+
+        {/* History List */}
+        {filteredHistory.length === 0 ? (
+          <div className="p-12 text-center border border-dashed border-slate-800 rounded-2xl bg-slate-950/30">
+            <span className="text-3xl">📝</span>
+            <h4 className="text-base font-bold text-slate-300 mt-2">No history items match this filter</h4>
+            <p className="text-xs text-slate-400 mt-1">Start practicing and answering questions to build your error notebook.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filteredHistory.map((item, idx) => {
+              const isExpanded = expandedId === item.id;
+              const formattedDate = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+              return (
+                <div
+                  key={item.id || idx}
+                  className={`rounded-xl border transition-all overflow-hidden ${item.isCorrect ? 'border-emerald-900/40 bg-emerald-950/10' : 'border-rose-900/40 bg-rose-950/10'}`}
+                >
+                  <div
+                    onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                    className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer hover:bg-slate-800/40 transition"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 ${
+                        item.isCorrect ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                      }`}>
+                        {item.isCorrect ? '✓' : '✕'}
+                      </div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <span className="font-mono text-xs font-bold text-white">{item.paper} &bull; {item.subtopic || item.subject}</span>
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">{item.type}</span>
+                          <span className="text-[10px] text-slate-400">{formattedDate}</span>
+                        </div>
+                        <p className="text-xs text-slate-300 mt-1 line-clamp-1 font-serif">
+                          {item.questionText ? item.questionText.slice(0, 100) + '...' : 'GATE Question'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-4 self-end sm:self-auto">
+                      <div className="text-right">
+                        <div className={`text-sm font-mono font-bold ${item.marksAwarded > 0 ? 'text-emerald-400' : item.marksAwarded < 0 ? 'text-rose-400' : 'text-slate-400'}`}>
+                          {item.marksAwarded > 0 ? `+${item.marksAwarded.toFixed(2)}` : item.marksAwarded.toFixed(2)}
+                        </div>
+                        <div className="text-[10px] text-slate-400">
+                          Your: <span className="font-bold text-white">{Array.isArray(item.userAnswer) ? item.userAnswer.join(',') : item.userAnswer}</span> | Ans: <span className="text-emerald-400 font-bold">{Array.isArray(item.correctAnswer) ? item.correctAnswer.join(',') : item.correctAnswer}</span>
+                        </div>
+                      </div>
+                      <span className="text-slate-400 text-xs">{isExpanded ? '▲' : '▼'}</span>
+                    </div>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="p-5 border-t border-slate-800 bg-slate-950/70 space-y-4 text-xs animate-fadeIn">
+                      <div>
+                        <span className="font-semibold text-slate-400 uppercase tracking-wider text-[10px]">Complete Question:</span>
+                        <div className="text-slate-200 mt-1 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: renderMathInText(item.questionText) }} />
+                      </div>
+
+                      {item.explanation && (
+                        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+                          {item.explanation.concept && (
+                            <div>
+                              <span className="text-blue-400 font-bold uppercase text-[10px]">Concept:</span>
+                              <div className="font-bold text-white text-sm">{item.explanation.concept}</div>
+                            </div>
+                          )}
+                          {item.explanation.formula && (
+                            <div className="p-2.5 rounded-lg bg-blue-950/30 border border-blue-900/40 text-center font-serif text-blue-200" dangerouslySetInnerHTML={{ __html: renderMathInText(`$$${item.explanation.formula}$$`) }} />
+                          )}
+                          {item.explanation.steps && (
+                            <div>
+                              <span className="text-slate-400 font-bold uppercase text-[10px]">Derivation:</span>
+                              <ol className="list-decimal list-inside space-y-1 text-slate-300 mt-1">
+                                {item.explanation.steps.map((s, i) => (
+                                  <li key={i} dangerouslySetInnerHTML={{ __html: renderMathInText(s) }} />
+                                ))}
+                              </ol>
+                            </div>
+                          )}
+                          {item.explanation.trap && (
+                            <div className="p-2.5 rounded-lg bg-amber-950/20 border border-amber-900/40 text-amber-200">
+                              <span className="font-bold text-amber-400">⚠️ GATE Trap: </span>
+                              {item.explanation.trap}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <div className="mt-6 pt-4 border-t border-slate-800 flex justify-end">
+          <button onClick={onClose} className="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition">
+            Close Notebook
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 7. USER PROFILE MODAL
+// ==========================================
+function UserProfileModal({ isOpen, onClose, user, history, onEditProfile, onSignOut }) {
+  if (!isOpen || !user) return null;
+  const totalSolved = history.length;
+  const correctCount = history.filter(h => h.isCorrect).length;
+  const lifetimeScore = history.reduce((sum, h) => sum + (h.marksAwarded || 0), 0);
+  const accuracy = totalSolved > 0 ? Math.round((correctCount / totalSolved) * 100) : 0;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+        <div className="flex items-start justify-between pb-4 border-b border-slate-800">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-blue-500/20">
+              {user.name.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-white flex items-center space-x-2">
+                <span>{user.name}</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                  {user.paperId}
+                </span>
+              </h3>
+              <p className="text-xs text-slate-400">{user.email || 'Aspirant'} &bull; {user.targetYear}</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition">✕</button>
+        </div>
+
+        <div className="my-5">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block mb-2">Lifetime Preparation Stats</span>
+          <div className="grid grid-cols-3 gap-2">
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-center">
+              <span className="text-[10px] text-slate-400 uppercase">Solved</span>
+              <div className="text-lg font-mono font-bold text-white mt-0.5">{totalSolved}</div>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-center">
+              <span className="text-[10px] text-slate-400 uppercase">Score</span>
+              <div className={`text-lg font-mono font-bold mt-0.5 ${lifetimeScore >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>{lifetimeScore.toFixed(2)}</div>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-center">
+              <span className="text-[10px] text-slate-400 uppercase">Accuracy</span>
+              <div className="text-lg font-mono font-bold text-sky-400 mt-0.5">{accuracy}%</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl bg-slate-950/40 border border-slate-800 space-y-2 text-xs text-slate-300">
+          <div className="flex justify-between"><span className="text-slate-500">Target Paper:</span><span className="font-bold text-white">GATE {user.paperId}</span></div>
+          <div className="flex justify-between"><span className="text-slate-500">Target Exam:</span><span className="font-bold text-white">{user.targetYear}</span></div>
+          <div className="flex justify-between"><span className="text-slate-500">Daily Target:</span><span className="font-bold text-white">{user.dailyGoal} questions / day</span></div>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+          <button onClick={() => { onClose(); onSignOut(); }} className="text-xs text-rose-400 hover:text-rose-300 transition">
+            Sign Out / Switch User
+          </button>
+          <div className="flex space-x-2">
+            <button onClick={() => { onClose(); onEditProfile(); }} className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+              Edit Profile
+            </button>
+            <button onClick={onClose} className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 8. MAIN APPLICATION
 // ==========================================
 function MainApp() {
+  // User Profile
+  const [user, setUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('gate_user_profile');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+  });
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
+  // Attempt History Log
+  const [history, setHistory] = useState(() => {
+    try {
+      const saved = localStorage.getItem('gate_practice_history');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) { return []; }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('gate_practice_history', JSON.stringify(history));
+  }, [history]);
+
+  // Paper State
   const [currentPaper, setCurrentPaper] = useState(() => {
-    const saved = localStorage.getItem('gate_paper_id');
+    const saved = user?.paperId || localStorage.getItem('gate_paper_id');
     return GATE_PAPERS.find(p => p.id === saved) || GATE_PAPERS[0];
   });
   const [isPaperSelectorOpen, setIsPaperSelectorOpen] = useState(false);
@@ -1097,6 +1311,35 @@ function MainApp() {
   useEffect(() => {
     localStorage.setItem('gate_stats', JSON.stringify(stats));
   }, [stats]);
+
+  // Open sign in if no user
+  useEffect(() => {
+    if (!user) {
+      setIsSignInOpen(true);
+    }
+  }, [user]);
+
+  const handleSignIn = (userData) => {
+    setUser(userData);
+    localStorage.setItem('gate_user_profile', JSON.stringify(userData));
+    if (userData.paperId) {
+      const p = GATE_PAPERS.find(x => x.id === userData.paperId);
+      if (p) handleSelectPaper(p);
+    }
+  };
+
+  const handleSignOut = () => {
+    setUser(null);
+    localStorage.removeItem('gate_user_profile');
+    setIsSignInOpen(true);
+  };
+
+  const handleClearHistory = () => {
+    if (confirm('Are you sure you want to clear your attempt history?')) {
+      setHistory([]);
+      localStorage.removeItem('gate_practice_history');
+    }
+  };
 
   const loadQuestion = async (paperId, subjId, subtop, qType, marks) => {
     setIsLoadingQuestion(true);
@@ -1141,6 +1384,7 @@ function MainApp() {
     setIsSubmitted(true);
     setIsExplanationOpen(true);
 
+    // Update Session Stats
     setStats(prev => ({
       score: prev.score + res.marksAwarded,
       attempted: prev.attempted + 1,
@@ -1148,6 +1392,27 @@ function MainApp() {
       incorrect: prev.incorrect + (!res.isCorrect ? 1 : 0),
       totalPenalty: prev.totalPenalty + res.penalty
     }));
+
+    // Record into Persistent History
+    const historyEntry = {
+      id: `attempt_${Date.now()}`,
+      timestamp: Date.now(),
+      questionId: currentQuestion.id,
+      paper: currentQuestion.paper,
+      subject: currentQuestion.subject,
+      subtopic: currentQuestion.subtopic,
+      questionText: currentQuestion.question,
+      type: currentQuestion.type,
+      marks: currentQuestion.marks,
+      userAnswer: userAnswer,
+      correctAnswer: res.correctAnswer,
+      isCorrect: res.isCorrect,
+      marksAwarded: res.marksAwarded,
+      penalty: res.penalty,
+      explanation: currentQuestion.explanation
+    };
+
+    setHistory(prev => [historyEntry, ...prev]);
 
     if (res.isCorrect && window.confetti) {
       window.confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
@@ -1175,7 +1440,7 @@ function MainApp() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-blue-600 selection:text-white">
       
-      {/* 1. Header */}
+      {/* Header */}
       <header className="sticky top-0 z-40 bg-slate-900 border-b border-slate-800 text-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -1192,16 +1457,16 @@ function MainApp() {
                 </span>
               </div>
               <p className="text-xs text-slate-400 hidden sm:block">
-                IISc & IIT standard PYQ-modeled practice with instant evaluation
+                {user ? `Aspirant: ${user.name} • ${user.targetYear}` : 'IIT & IISc standard PYQ practice with instant evaluation'}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Paper Switcher Pill */}
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Paper Switcher */}
             <button
               onClick={() => setIsPaperSelectorOpen(true)}
-              className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-medium border border-slate-700 hover:border-blue-500/50 transition-all cursor-pointer"
+              className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium border border-slate-700 hover:border-blue-500/50 transition-all cursor-pointer"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span className="text-slate-300 font-bold">{currentPaper.code}</span>
@@ -1209,7 +1474,22 @@ function MainApp() {
               <span className="text-slate-400 text-xs">▼</span>
             </button>
 
-            {/* Virtual Calculator Toggle */}
+            {/* Error Notebook / History Button */}
+            <button
+              onClick={() => setIsHistoryOpen(true)}
+              className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 hover:border-indigo-500/40 transition text-xs flex items-center space-x-1.5 cursor-pointer"
+              title="View Attempt History & Error Notebook"
+            >
+              <span className="text-sm">📖</span>
+              <span className="hidden sm:inline font-medium">History</span>
+              {history.length > 0 && (
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-600 text-white font-bold font-mono">
+                  {history.length}
+                </span>
+              )}
+            </button>
+
+            {/* Virtual Calculator */}
             <button
               onClick={() => setIsCalculatorOpen(prev => !prev)}
               className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-900/60 text-slate-300 hover:text-indigo-300 border border-slate-700 hover:border-indigo-500/50 transition text-xs flex items-center space-x-1.5 cursor-pointer"
@@ -1217,8 +1497,8 @@ function MainApp() {
               <span className="font-mono font-bold">Calculator</span>
             </button>
 
-            {/* Score Badges */}
-            <div className="hidden lg:flex items-center space-x-2 bg-slate-950/70 px-3 py-1 rounded-lg border border-slate-800 font-mono text-xs">
+            {/* Score */}
+            <div className="hidden xl:flex items-center space-x-2 bg-slate-950/70 px-3 py-1 rounded-lg border border-slate-800 font-mono text-xs">
               <span className="text-slate-400">Score:</span>
               <span className={`font-bold ${stats.score >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {stats.score.toFixed(2)}
@@ -1230,11 +1510,34 @@ function MainApp() {
               </span>
             </div>
 
-            {/* API Settings */}
+            {/* User Profile Pill or Sign In Button */}
+            {user ? (
+              <button
+                onClick={() => setIsProfileOpen(true)}
+                className="flex items-center space-x-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-gradient-to-r from-blue-950 to-indigo-950 border border-blue-500/40 hover:border-blue-400 transition cursor-pointer"
+                title="Aspirant Profile"
+              >
+                <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <span className="text-xs font-bold text-blue-200 hidden md:inline max-w-[90px] truncate">
+                  {user.name}
+                </span>
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsSignInOpen(true)}
+                className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition cursor-pointer"
+              >
+                Sign In
+              </button>
+            )}
+
+            {/* Settings */}
             <button
               onClick={() => setIsSettingsOpen(true)}
               className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-blue-400 border border-slate-700 transition cursor-pointer text-xs"
-              title="Configure Settings"
+              title="Settings"
             >
               ⚙
             </button>
@@ -1242,9 +1545,32 @@ function MainApp() {
         </div>
       </header>
 
-      {/* 2. Main Content */}
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
+        {/* Welcome Banner for Logged-In User */}
+        {user && (
+          <div className="mb-5 p-4 rounded-2xl bg-gradient-to-r from-blue-950/40 via-slate-900 to-indigo-950/40 border border-blue-900/30 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <span className="text-2xl">👋</span>
+              <div>
+                <h3 className="text-sm font-bold text-white">
+                  Welcome back, <span className="text-blue-400">{user.name}</span>!
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Target: <strong className="text-slate-300">{user.paperId}</strong> • Exam: <strong className="text-slate-300">{user.targetYear}</strong> • Daily Goal: <strong className="text-slate-300">{user.dailyGoal} questions</strong> ({history.length} solved so far)
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsHistoryOpen(true)}
+              className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition"
+            >
+              <span>View Past Attempts ({history.length})</span>
+            </button>
+          </div>
+        )}
+
         {/* TOPIC SELECTOR */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-3">
@@ -1298,9 +1624,7 @@ function MainApp() {
 
           {/* Subjects Grid */}
           <div className="mt-4">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
-              Subject:
-            </label>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Subject:</label>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               {currentPaper.subjects.map(subject => {
                 const isSelected = selectedSubject === subject.id;
@@ -1328,9 +1652,7 @@ function MainApp() {
           {/* Subtopics */}
           {activeSubjectData && activeSubjectData.subtopics && (
             <div className="mt-4 pt-3 border-t border-slate-800/80">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
-                Focus Subtopic:
-              </label>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Focus Subtopic:</label>
               <div className="flex flex-wrap gap-1.5">
                 <button
                   onClick={() => setSelectedSubtopic('')}
@@ -1355,7 +1677,7 @@ function MainApp() {
           <div className="mt-5 pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-xs text-slate-400 flex items-center space-x-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span>Questions modeled after official IIT/IISc Previous Years Papers & common traps</span>
+              <span>Questions modeled after IIT/IISc Previous Years Papers & trap analysis</span>
             </div>
             <button
               onClick={() => loadQuestion(currentPaper.id, selectedSubject, selectedSubtopic, questionType === 'ALL' ? null : questionType, marksFilter)}
@@ -1376,15 +1698,12 @@ function MainApp() {
           </div>
         ) : currentQuestion ? (
           <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden mb-8">
-            {/* Header */}
             <div className="bg-slate-950/80 px-6 py-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center space-x-3">
                 <span className="px-2.5 py-1 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30 font-mono font-bold text-xs">
                   {currentQuestion.paper} &bull; {currentQuestion.subtopic}
                 </span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
-                  {currentQuestion.type}
-                </span>
+                <span className="text-xs font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">{currentQuestion.type}</span>
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
                   +{currentQuestion.marks} Mark{currentQuestion.marks > 1 ? 's' : ''}
                 </span>
@@ -1408,7 +1727,6 @@ function MainApp() {
               </div>
             </div>
 
-            {/* Reference */}
             {currentQuestion.pyqReference && (
               <div className="bg-indigo-950/20 px-6 py-1.5 border-b border-indigo-900/30 flex items-center justify-between text-[11px] text-indigo-300">
                 <span>{currentQuestion.pyqReference}</span>
@@ -1418,14 +1736,9 @@ function MainApp() {
               </div>
             )}
 
-            {/* Body */}
             <div className="p-6 sm:p-8">
-              <div
-                className="text-base sm:text-lg text-slate-100 font-normal leading-relaxed mb-6 space-y-3"
-                dangerouslySetInnerHTML={{ __html: renderMathInText(currentQuestion.question) }}
-              />
+              <div className="text-base sm:text-lg text-slate-100 font-normal leading-relaxed mb-6 space-y-3" dangerouslySetInnerHTML={{ __html: renderMathInText(currentQuestion.question) }} />
 
-              {/* Options */}
               {(currentQuestion.type === 'MCQ' || currentQuestion.type === 'MSQ') && currentQuestion.options && (
                 <div className="space-y-3">
                   <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">
@@ -1461,12 +1774,9 @@ function MainApp() {
                 </div>
               )}
 
-              {/* NAT Input */}
               {currentQuestion.type === 'NAT' && (
                 <div className="mt-4 p-5 rounded-xl border border-slate-800 bg-slate-950/60 max-w-lg">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
-                    Numerical Answer:
-                  </label>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Numerical Answer:</label>
                   <div className="flex items-center space-x-3">
                     <input
                       type="text"
@@ -1480,14 +1790,10 @@ function MainApp() {
                       Clear
                     </button>
                   </div>
-                  <p className="text-xs text-slate-400 mt-2">
-                    Tip: Enter integer or decimal value according to instructions.
-                  </p>
                 </div>
               )}
             </div>
 
-            {/* Footer */}
             <div className="bg-slate-950 px-6 py-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center space-x-2">
                 <button
@@ -1541,7 +1847,7 @@ function MainApp() {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-5">
             <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Net GATE Marks</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Net Marks</span>
               <div className={`text-2xl font-black font-mono mt-1 ${stats.score >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {stats.score.toFixed(2)}
               </div>
@@ -1557,15 +1863,15 @@ function MainApp() {
             </div>
 
             <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Attempted</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Solved</span>
               <div className="text-2xl font-black font-mono text-indigo-400 mt-1">{stats.attempted}</div>
               <span className="text-[10px] text-slate-400">{stats.incorrect} incorrect</span>
             </div>
 
             <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Negative Penalty</span>
-              <div className="text-2xl font-black font-mono text-rose-400 mt-1">-{stats.totalPenalty.toFixed(2)}</div>
-              <span className="text-[10px] text-slate-400">Avoidable errors</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Lifetime Saved</span>
+              <div className="text-2xl font-black font-mono text-emerald-400 mt-1">{history.length}</div>
+              <span className="text-[10px] text-slate-400">In Error Notebook</span>
             </div>
           </div>
         </div>
@@ -1582,7 +1888,6 @@ function MainApp() {
                   GATE Exam Papers
                 </span>
                 <h2 className="text-2xl font-extrabold text-white mt-1">Select Your Target GATE Paper</h2>
-                <p className="text-sm text-slate-400 mt-1">Tailors topics, questions, and PYQ syllabus accordingly.</p>
               </div>
               <button onClick={() => setIsPaperSelectorOpen(false)} className="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800">✕</button>
             </div>
@@ -1624,7 +1929,6 @@ function MainApp() {
       {isExplanationOpen && evaluation && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[92vh]">
-            {/* Banner */}
             <div className={`p-5 rounded-2xl border mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
               evaluation.isCorrect ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-200' : 'bg-rose-950/40 border-rose-500/50 text-rose-200'
             }`}>
@@ -1637,7 +1941,7 @@ function MainApp() {
                 <div>
                   <h3 className="text-xl font-black">{evaluation.isCorrect ? 'Correct Answer! Great Job.' : 'Incorrect Response'}</h3>
                   <p className="text-xs opacity-90">
-                    {evaluation.isCorrect ? 'Your conceptual derivation is spot on!' : 'Review the detailed step-by-step solution to understand the pattern.'}
+                    {evaluation.isCorrect ? 'Saved into your practice notebook.' : 'Added to your Error Notebook for revision.'}
                   </p>
                 </div>
               </div>
@@ -1653,7 +1957,6 @@ function MainApp() {
               </div>
             </div>
 
-            {/* Correct Answer */}
             <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-6 flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Official Correct Answer:</span>
               <span className="text-base font-mono font-bold text-emerald-400 px-3 py-1 rounded-md bg-emerald-950/50 border border-emerald-800">
@@ -1661,7 +1964,6 @@ function MainApp() {
               </span>
             </div>
 
-            {/* Explanation Details */}
             {evaluation.explanation && (
               <div className="space-y-5 text-slate-200">
                 {evaluation.explanation.concept && (
@@ -1701,7 +2003,6 @@ function MainApp() {
               </div>
             )}
 
-            {/* Modal Actions */}
             <div className="mt-8 pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
               <button onClick={() => setIsExplanationOpen(false)} className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm cursor-pointer">
                 Review Question
@@ -1722,6 +2023,32 @@ function MainApp() {
 
       {/* CALCULATOR */}
       <VirtualCalculator isOpen={isCalculatorOpen} onClose={() => setIsCalculatorOpen(false)} />
+
+      {/* SIGN IN MODAL */}
+      <SignInModal
+        isOpen={isSignInOpen}
+        onClose={() => setIsSignInOpen(false)}
+        onSignIn={handleSignIn}
+        existingUser={user}
+      />
+
+      {/* USER PROFILE MODAL */}
+      <UserProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        user={user}
+        history={history}
+        onEditProfile={() => setIsSignInOpen(true)}
+        onSignOut={handleSignOut}
+      />
+
+      {/* ATTEMPT HISTORY & ERROR NOTEBOOK MODAL */}
+      <HistoryModal
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
+        history={history}
+        onClearHistory={handleClearHistory}
+      />
 
       {/* SETTINGS MODAL */}
       {isSettingsOpen && (
