@@ -25,6 +25,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build and Minify Application
+        run: |
+          npx --yes esbuild app.bundle.jsx --outfile=app.bundle.js --minify
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

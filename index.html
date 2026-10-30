@@ -37,16 +37,15 @@
   </script>
 
   <!-- KaTeX CSS & JS for crisp mathematical equations -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 
   <!-- Canvas Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.2/confetti.browser.min.js"></script>
 
-  <!-- React 18 & Babel Standalone -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- React 18 & ReactDOM from high-speed Cloudflare cdnjs (Instant Load) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 
   <style>
     @keyframes fadeIn {
@@ -54,23 +53,22 @@
       to { opacity: 1; transform: scale(1); }
     }
     .animate-fadeIn {
-      animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-blue-600 selection:text-white">
   <div id="root">
-    <!-- Initial Loading State -->
+    <!-- Instant Skeleton Loader -->
     <div class="flex items-center justify-center min-h-screen">
       <div class="text-center">
-        <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-sm font-semibold text-slate-300">Initializing GATE Practice Agent...</p>
-        <p class="text-xs text-slate-500 mt-1">Loading PYQ Knowledge Base & Examination Engine</p>
+        <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+        <p class="text-sm font-semibold text-slate-300">Loading GATE Practice Agent...</p>
       </div>
     </div>
   </div>
 
-  <!-- Standalone Application Script -->
-  <script type="text/babel" src="./app.bundle.jsx"></script>
+  <!-- Pre-compiled Vanilla JavaScript (Zero Transpilation Delay, Loads Instantly) -->
+  <script defer src="./app.bundle.js"></script>
 </body>
 </html>
